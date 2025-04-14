@@ -8,7 +8,118 @@ public class App {
         return "Hello World!";
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public static void main(String[] args) {
+    
+        if (args.length < 2) {
+            UsoCorreto();
+            return;
+        }
+        //adicionei a variavel , guardei em um vetor e converti para minusculo
+        String forma = args[0].toLowerCase();
+            //executei o codigo com try para facilitar a explicação de erro
+        try {
+            switch (forma) {//caso do triangulo
+                case "triangulo":
+                    //armazeno e converto para inteiro na linha apos o zero do vetor
+                    int altT = Integer.parseInt(args[1]);
+                    //verifica se altT é menor que 1 , se for executa NumberFormatException para orientar o usuario
+                    if (altT < 1) throw new NumberFormatException();
+                    //define 
+                    DeseT(altT);
+                    break;
+                //caso do losangulo
+                case "losangulo":
+                    //define como inteiro converte para inteiro tambem e guarda no vetor
+                    int largL = Integer.parseInt(args[1]);
+                    //verifica se o resto da divisão d avariavel por 2 resulta em zero para vere se é impar ou não e checa se é menor que 1
+                    if (largL % 2 == 0 || largL < 1) {
+                        //avisa ao usuario se errou e como deve ser o valor dessa variavel
+                        System.out.println("Errou , errou , errou feio , errou feio errou rude! tem que ser impar e positivo");
+                        //retorna o usuario para definir a variavel novamente
+                        return;
+                    }
+                    DeseL(largL);
+                    break;
+                    //caso do retangulo
+                case "retangulo":
+                    //verifica se o tamanho do array é menor que 3, caso for leva ele para as intruções do uso correto
+                    if (args.length < 3) {
+                        UsoCorreto();
+                        return;
+                    }
+                    //converte e guarda no array do vetor novamente, guarda a variavel de largura e altura dessa vez
+                    int larg = Integer.parseInt(args[1]);
+                    int alt = Integer.parseInt(args[2]);
+                    //verifica se as variaveis tem o tamanho minimo para formar a figura , caso não tenha orienta o usuario novamente
+                    if (larg < 2 || alt < 2) {
+                        System.out.println("as variaveis tem que ser maiores que 1");
+                        return;
+                    }
+                    //executa o metodo e usa as variaveis como parametro
+                    DeseR(larg, alt);
+                    break;
+                    //se ele definir as variaveis de forma bem errada executara  isso para orientar o usuario
+                default:
+                    UsoCorreto();
+            }//caso aconteça esse erro em especifico 
+        } catch (NumberFormatException e) {
+            System.out.println("tem quer ser um numero valido e inteiro");
+        }
+    }
+    //da exemplo ao usuario de como usar o terminal para executar o programa
+    static void UsoCorreto() {
+        System.out.println("Como usar:");
+        System.out.println("  java lista1formas.java triangulo <altura>");
+        System.out.println("  java lista1formas.java losangulo <largura>");
+        System.out.println("  java lista1formas.java retangulo <largura> <altura>");
+    }
+
+    static void DeseT(int alt) {
+        //usei para , porque é melhor com arrays ja que ciclam , pena que é dificil definir um fina que fique valido para o "for"
+        //toda vez que terinar esse ciclo vai adicionar valor em "i" e em "j" ate equilibrar
+                for (int a = 1; a <= alt; a++) {
+                    for (int c = 0; c <= alt - a; c++) {
+                //formar a figura com "*"
+                System.out.print(" ");}
+            for (int b = 1; b <= a; b++) {
+                
+                System.out.print("*");
+            }
+            System.out.println("");
+            
+        }
+    }
+    //desenhar o losangulo
+    static void DeseL(int larg) {
+        //dividir a largura por 2
+        int centro = larg / 2;
+        // Parte de cima
+        for (int a = 0; a <= centro; a++) {
+            //usei for novamente para desenhar os espaços vazio e preeenchidos de forma simetrica
+            for (int b = 0; b < centro - a; b++) System.out.print(" ");
+            for (int b = 0; b < 2 * a + 1; b++) System.out.print("*");
+            System.out.println();
+        }
+        // Parte de baixo , quase a mesma que fiz acima , mas definindo o centro e usando ele como uma base para inverter o sentido
+        for (int a = centro - 1; a >= 0; a--) {
+            for (int b = 0; b < centro - a; b++) System.out.print(" ");
+            for (int b = 0; b < 2 * a + 1; b++) System.out.print("*");
+            System.out.println();
+        }
+    }
+    //novamente definindo os parametros e chamando o codigo
+    static void DeseR(int larg, int alt) {
+        //esse foi mais dificil de fazer dar certo o desenho , tive que pedir ajuda para entender como faz para desenhar a forma
+        for (int a = 0; a < alt; a++) {
+            for (int b = 0; b < larg; b++) {
+                if (a == 0 || a == alt - 1 || b == 0 || b == larg - 1) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            //finalmente 
+            System.out.println();
+        }
     }
 }
