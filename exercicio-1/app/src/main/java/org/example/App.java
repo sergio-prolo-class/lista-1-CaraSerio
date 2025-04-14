@@ -17,13 +17,12 @@ public static void main(String[] args) {
         //adicionei a variavel , guardei em um vetor e converti para minusculo
         String forma = args[0].toLowerCase();
             //executei o codigo com try para facilitar a explicação de erro
-        try {
+        if (args[1] > 1) {
             switch (forma) {//caso do triangulo
                 case "triangulo":
                     //armazeno e converto para inteiro na linha apos o zero do vetor
                     int altT = Integer.parseInt(args[1]);
                     //verifica se altT é menor que 1 , se for executa NumberFormatException para orientar o usuario
-                    if (altT < 1) throw new NumberFormatException();
                     //define 
                     DeseT(altT);
                     break;
@@ -62,7 +61,7 @@ public static void main(String[] args) {
                 default:
                     UsoCorreto();
             }//caso aconteça esse erro em especifico 
-        } catch (NumberFormatException e) {
+        } else  {
             System.out.println("tem quer ser um numero valido e inteiro");
         }
     }
