@@ -4,8 +4,8 @@
 
 import java.util.Random;
 
-public class App {
-    public String getGreeting() {
+public class barcos {
+    public void getGreeting() {
     }
 
     public static void main(String[] args) {
@@ -15,10 +15,11 @@ public class App {
                 tabuleiro[i][b] = ".";
             }  
         }
-
+        
         int portaAvioes = 5;
         int encouracado = 4;
-
+        int cruzador = 3;
+        int submarino = 3;
         Random random = new Random();
 
         while (true) {
@@ -44,11 +45,40 @@ public class App {
             System.out.println(posy);
 
             while (true) {
+                if (posy + cruzador <= 10) {
+                    //Cruzador
+                    for (int i = 0; i < cruzador; i++) {
+                        tabuleiro[posx+i][posy] = "C";          
+                    }
+                }
+                break; 
+            }
+            posx = random.nextInt(10);
+            System.out.println(posx);
+            posy = random.nextInt(10);
+            System.out.println(posy);
+
+            while (true) {
                 if (posy + encouracado <= 10) {
                     //ENcouraçado
                     for (int i = 0; i < encouracado; i++) {
                         tabuleiro[posx][posy+i] = "E";          
                     }
+                }
+                break; 
+            }
+            posx = random.nextInt(10);
+            System.out.println(posx);
+            posy = random.nextInt(10);
+            System.out.println(posy);
+
+            while (true) {
+                if (posy + submarino <= 10) {
+                    //submarino
+                    for (int i = 0; i < submarino; i++) {
+                        tabuleiro[posx][posy+i] = "S";          
+                    }
+                    
                 }
                 break; 
             }
