@@ -4,95 +4,76 @@
 
 import java.util.Random;
 
-public class barcos {
-    public void getGreeting() {
+public class barcos7 {
+    //tamanho de cada barco
+    private static int getTamanhobarcos(char barcos) {
+        switch(barcos) {
+            case 'P': return 5; //Porta avioes
+            case 'E': return 4; //Encouraçado
+            case 'C': return 3; //Cruzador
+            case 'S': return 3; //Submarino
+            case 'N': return 2; //Contratorpedeiro
+            default: return 0;
+        }
     }
 
-    public static void main(String[] args) {
-        String[][] tabuleiro = new String[10][10];
-        for (int i = 0; i < 10; i++) {
-            for (int b = 0; b < 10; b++) {
-                tabuleiro[i][b] = ".";
-            }  
-        }
+    public static void main(String[] args) {//gera matrix tabuleiro 10 por 10
         
-        int portaAvioes = 5;
-        int encouracado = 4;
-        int cruzador = 3;
-        int submarino = 3;
-        Random random = new Random();
-
-        while (true) {
-            int posx = random.nextInt(10);
-            System.out.println(posx);
-            int posy = random.nextInt(10);
-            System.out.println(posy);
-            while (true) {
-                if (posx + portaAvioes <= 10) {
-                    //porta aviões
-                    for (int i = 0; i < portaAvioes; i++) {
-                        tabuleiro[posx+i][posy] = "P";          
-                    }
-                }
-                break; 
+        String[][] tabuleiro = new String[10][10];
+        for(int x = 0; x < 10; x++) {
+            for(int y = 0; y < 10; y++) {
+                tabuleiro[x][y] = "."; //define como agua
             }
-
-            
-            
-            posx = random.nextInt(10);
-            System.out.println(posx);
-            posy = random.nextInt(10);
-            System.out.println(posy);
-
-            while (true) {
-                if (posy + cruzador <= 10) {
-                    //Cruzador
-                    for (int i = 0; i < cruzador; i++) {
-                        tabuleiro[posx+i][posy] = "C";          
-                    }
-                }
-                break; 
-            }
-            posx = random.nextInt(10);
-            System.out.println(posx);
-            posy = random.nextInt(10);
-            System.out.println(posy);
-
-            while (true) {
-                if (posy + encouracado <= 10) {
-                    //ENcouraçado
-                    for (int i = 0; i < encouracado; i++) {
-                        tabuleiro[posx][posy+i] = "E";          
-                    }
-                }
-                break; 
-            }
-            posx = random.nextInt(10);
-            System.out.println(posx);
-            posy = random.nextInt(10);
-            System.out.println(posy);
-
-            while (true) {
-                if (posy + submarino <= 10) {
-                    //submarino
-                    for (int i = 0; i < submarino; i++) {
-                        tabuleiro[posx][posy+i] = "S";          
-                    }
-                    
-                }
-                break; 
-            }
-
-            
-            
-            break;
         }
 
-    
-        for (int i = 0; i < 10; i++) {
-            for (int b = 0; b < 10; b++) {
-                System.out.print(tabuleiro[i][b] + " ");
-            }  
+        Random random = new Random();
+        char[] barcos = new char[] {'P', 'E', 'C', 'S', 'N'}; //array dos barcos
+
+        // Posiciona os barcos caso o booleano deixe
+        for(char barcos2 : barcos) {
+            boolean inserido = false;
+            int tamanhoBarco = getTamanhobarcos(barcos2);
+            
+            while(!inserido) { //enquanto não inserido
+                int posX = random.nextInt(10); //eixo X aleatorio
+                int posY = random.nextInt(10); //eixo Y aleatorio
+                boolean XouY = random.nextBoolean();
+                boolean cabe = true;
+
+                // Verifica se a posição é válida
+                for(int i = 0; i < tamanhoBarco; i++) {
+                    if(XouY) {
+                        if(posY + i >= 10 || !tabuleiro[posX][posY + i].equals(".")) { //checa se cabe altura e se é agua
+                            cabe = false;
+                            break;
+                        }
+                    } else {
+                        if(posX + i >= 10 || !tabuleiro[posX + i][posY].equals(".")) { //checa se cabe para os lados e se é aggua tambem
+                            cabe = false;
+                            break;
+                        }
+                    }
+                }
+
+                //coloca os barcos se couberem 
+                if(cabe) {
+                    for(int i = 0; i < tamanhoBarco; i++) {
+                        if(XouY) {
+                            tabuleiro[posX][posY + i] = String.valueOf(barcos2);
+                        } else {
+                            tabuleiro[posX + i][posY] = String.valueOf(barcos2);
+                        }
+                    }
+                    inserido = true; //para parar de checar
+                }
+            }
+        }
+
+        //mostra o tabuleiro com espaços vazios
+        for(String[] linha : tabuleiro) {
+            for(String celula : linha) { 
+                System.out.print(celula + " ");
+            }
             System.out.println();
         }
     }
